@@ -116,6 +116,17 @@ LAB6_INPUT_DIR=/tmp/lab6_teacher_8_images docker compose run --rm infer
 stdout: inaction
 ```
 
+Fresh GitHub clone:
+
+```text
+git clone https://github.com/HVGrach/miet-lab-video-learning.git
+scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
+docker build -t timesformer-infer-fresh .
+docker run --rm --network none -v ...:/app/input:ro timesformer-infer-fresh
+stdout: inaction
+real: 5.34 sec
+```
+
 Offline embedding inference:
 
 ```text

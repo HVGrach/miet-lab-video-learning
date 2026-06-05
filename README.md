@@ -188,6 +188,17 @@ stdout: inaction
 real: 7.69 sec
 ```
 
+Fresh GitHub clone check:
+
+```text
+git clone https://github.com/HVGrach/miet-lab-video-learning.git
+scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
+docker build -t timesformer-infer-fresh .
+docker run --rm --network none -v ...:/app/input:ro timesformer-infer-fresh
+stdout: inaction
+real: 5.34 sec
+```
+
 The Docker raw-frame path was checked with `--network none`; the image contains the required weights and does not download models at runtime.
 
 ## Legacy Entry Point

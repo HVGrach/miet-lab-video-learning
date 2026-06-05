@@ -151,4 +151,13 @@ LAB6_INPUT_DIR=/tmp/lab6_teacher_8_images docker compose run --rm infer
 stdout: inaction
 ```
 
+```text
+fresh clone from https://github.com/HVGrach/miet-lab-video-learning.git
+scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
+docker build -t timesformer-infer-fresh .
+docker run --rm --network none -v ...:/app/input:ro timesformer-infer-fresh
+stdout: inaction
+real: 5.34 sec
+```
+
 Вывод: текущий публичный Docker путь принимает папку ровно с 8 изображениями и печатает ровно один класс.
