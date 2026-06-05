@@ -1,0 +1,26 @@
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+lab6/
+lab6_from_rar_backup_*/
+notebooks/
+outputs/baseline_runs/
+outputs/timesformer_runs/*/model_best.pt
+outputs/manifests/duplicate_frame_audit.csv
+outputs/manifests/hash_source_linkage_candidates.csv
+outputs/manifests/sample_overlap_audit.csv
+outputs/manifests/split_frame_hashes.csv
+outputs/reports/role_green_proxy_frames.csv
+YARIK_PM_LAB6_MESSAGES_RU.md
+LAB6_FOUNDATION_RU.md
+
+# Large release artifacts should be distributed explicitly.
+weights/timesformer_checkpoint.pt
+weights/timesformer_hf/
+release_assets/
+
+# Public repo should not include private/source-derived visual or metadata artifacts.
+outputs/eda/*contact_sheet.png
+outputs/manifests/file_metadata_manifest.csv

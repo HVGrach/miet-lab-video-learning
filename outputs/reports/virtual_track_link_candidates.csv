@@ -1,0 +1,5 @@
+source_track_group_id,label,folder_rel,frame_count,dominant_time_token,time_token_count,link_reason,confidence,uses_mtime_for_link
+move::filename_time::00-28-44,move,move/track_000659,15,00-28-44,8,same_label_filename_time,review,False
+move::filename_time::00-28-44,move,move/track_002421,25,00-28-44,12,same_label_filename_time,review,False
+work::filename_time::00-23-56,work,work/track_000384,16,00-23-56,10,same_label_filename_time,review,False
+work::filename_time::00-23-56,work,work/track_000412,279,00-23-56,12,same_label_filename_time,review,False

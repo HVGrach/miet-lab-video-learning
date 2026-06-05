@@ -1,0 +1,2 @@
+sample_id,true_label,pred_label,prob_inaction,prob_move,prob_work
+explicit::inaction/(12)::0,inaction,work,0.20666135847568512,0.30494970083236694,0.48838895559310913

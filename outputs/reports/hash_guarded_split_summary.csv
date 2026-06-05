@@ -1,0 +1,7 @@
+label,split,samples
+inaction,train,455
+inaction,val,117
+move,train,323
+move,val,105
+work,train,444
+work,val,102

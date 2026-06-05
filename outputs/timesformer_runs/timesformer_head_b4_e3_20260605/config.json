@@ -1,0 +1,35 @@
+{
+  "run_id": "timesformer_head_b4_e3_20260605",
+  "dataset_root": "lab6",
+  "split_csv": "outputs/manifests/train_val_split_hash_guarded.csv",
+  "hf_model_path": "weights/timesformer_hf",
+  "epochs": 3,
+  "batch_size": 4,
+  "lr": 0.0001,
+  "device": "auto",
+  "max_train_batches": null,
+  "max_val_batches": null,
+  "deployment": {
+    "track_name": "track35_timesformer",
+    "timesformer_model_name": "facebook/timesformer-base-finetuned-k400",
+    "preprocess_name": "224_no_pad",
+    "video_peft_type": "last_block_only",
+    "video_training_scope": "last_n_blocks",
+    "video_last_n_blocks": 1,
+    "video_adapter_dim": 64,
+    "video_embedding_type": "default",
+    "video_frame_pool_type": "default",
+    "batch_size": 4,
+    "grad_accum_steps": 1,
+    "adamw_lr": 0.0001,
+    "weight_decay": 0.03,
+    "use_pk_sampler": true,
+    "num_frames": 8,
+    "image_size": 224,
+    "class_names": [
+      "inaction",
+      "move",
+      "work"
+    ]
+  }
+}

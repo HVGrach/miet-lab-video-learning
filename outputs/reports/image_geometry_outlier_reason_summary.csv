@@ -1,0 +1,12 @@
+label,outlier_reason,frames
+inaction,small_width,2005
+work,small_width,1082
+move,small_width,631
+work,small_height,17
+move,"small_width,low_aspect",15
+work,"small_width,small_height",15
+work,"small_width,low_aspect",11
+inaction,"small_width,small_height",5
+work,high_aspect,2
+work,low_aspect,2
+move,high_aspect,1

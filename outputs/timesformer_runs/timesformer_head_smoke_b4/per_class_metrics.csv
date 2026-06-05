@@ -1,0 +1,4 @@
+label,precision,recall,f1,support
+inaction,1.0,0.25,0.4,4
+move,0.0,0.0,0.0,0
+work,0.0,0.0,0.0,0

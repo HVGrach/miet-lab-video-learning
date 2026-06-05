@@ -1,0 +1,8 @@
+pandas
+Pillow
+matplotlib
+nbformat
+nbclient
+torch
+torchvision
+scikit-learn

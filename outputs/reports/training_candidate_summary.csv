@@ -1,0 +1,11 @@
+label,sample_kind,samples,folders,mean_source_frames
+inaction,explicit_folder_8,4,4,8.0
+inaction,explicit_prefixed_8,64,11,8.0
+inaction,inaction_skip_ordered,504,21,193.38
+move,explicit_folder_8,18,18,8.0
+move,explicit_prefixed_8,31,11,8.0
+move,stride_dilation,379,77,55.88
+work,explicit_folder_8,23,23,8.0
+work,explicit_prefixed_8,222,32,8.0
+work,explicit_remaining_8,2,2,8.0
+work,stride_dilation,299,98,175.48

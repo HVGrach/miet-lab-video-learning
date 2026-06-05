@@ -1,0 +1,28 @@
+{
+  "run_id": "tiny_sequence_smoke",
+  "is_smoke": true,
+  "seed": 20260602,
+  "split_manifest": "outputs/manifests/train_val_split_hash_guarded.csv",
+  "split_manifest_sha256": "f0ffb2e86e90c49f57b215cc9ea7d9a807a6ae223cba371054fe125115412d6c",
+  "image_size": [
+    64,
+    64
+  ],
+  "batch_size": 16,
+  "max_train_batches": 20,
+  "model": "TinySequenceClassifier",
+  "optimizer": "AdamW",
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "selection_metric": "val_macro_f1",
+  "device": "mps",
+  "train_samples": 1222,
+  "val_samples": 324,
+  "train_loss": 1.072585505247116,
+  "val_loss": 1.178096189910983,
+  "val_accuracy": 0.3549382716049383,
+  "val_macro_f1": 0.2783508036338225,
+  "hash_leakage_rows": 0,
+  "virtual_leakage_rows": 0,
+  "elapsed_sec": 4.2644782066345215
+}

@@ -1,0 +1,17 @@
+.git
+.DS_Store
+__pycache__
+*.pyc
+
+lab6
+lab6_from_rar_backup_*
+notebooks
+tests
+
+outputs/*
+!outputs/models/
+outputs/models/*
+!outputs/models/lab6_action_classifier.pt
+
+*.ipynb_checkpoints
+ChatExport_*

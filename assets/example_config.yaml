@@ -1,0 +1,12 @@
+track_name: track35_timesformer
+timesformer_model_name: facebook/timesformer-base-finetuned-k400
+preprocess_name: 224_no_pad
+num_frames: 8
+classes:
+  - inaction
+  - move
+  - work
+weights:
+  timesformer_checkpoint: weights/timesformer_checkpoint.pt
+  bagging_model: weights/bagging_best.joblib
+  labels: weights/labels.json
