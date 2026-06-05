@@ -1,14 +1,14 @@
-# Lab6 Employee Action Inference
+# Lab6: классификация действий сотрудников
 
-Docker-ready solution for classifying a folder with exactly 8 images into one class:
+Готовое Docker-решение для классификации папки с ровно 8 изображениями в один из трех классов:
 
 - `inaction`
 - `move`
 - `work`
 
-The teacher-facing contract is: restore weights, build the Docker image, mount a folder with exactly 8 images, and read one class from stdout.
+Основной сценарий: восстановить веса, собрать Docker-образ, передать папку с 8 изображениями и получить один класс в stdout.
 
-## Quick Check
+## Быстрая проверка
 
 ```bash
 git clone https://github.com/HVGrach/miet-lab-video-learning.git
@@ -22,42 +22,42 @@ docker run --rm \
   timesformer-infer
 ```
 
-Successful output is exactly one line:
+При успешном запуске выводится ровно одна строка:
 
 ```text
 inaction
 ```
 
-or:
+или:
 
 ```text
 move
 ```
 
-or:
+или:
 
 ```text
 work
 ```
 
-The Docker image defaults to:
+Docker-образ по умолчанию запускает:
 
 ```bash
 python -m src.predict_frames --input /app/input
 ```
 
-The input folder must contain exactly 8 image files. Non-image files are rejected; hidden junk such as `.DS_Store` is ignored.
+Входная папка должна содержать ровно 8 файлов изображений. Неизображения отклоняются; скрытый мусор вроде `.DS_Store` игнорируется.
 
-## Google Drive Weights
+## Веса на Google Drive
 
-Large weights are stored outside Git and restored by `scripts/download_google_drive_weights.sh`.
+Крупные веса не хранятся в Git. Их восстанавливает скрипт `scripts/download_google_drive_weights.sh`.
 
-- Weights bundle: [lab6_weights_bundle.tar.gz](https://drive.google.com/open?id=1q4rjJALqwzE-Hb3QRtvxand6QDoSSZJh)
-- Checksum file: [lab6_weights_bundle.tar.gz.sha256](https://drive.google.com/open?id=1yCFZfxLh2ap_nS-yrnwUlb6TjSxRrbIE)
-- Expected SHA256: `967d087056729d2828d6aa48e65a17d1ec3f38cc62d694ad3f0d4a23537199d3`
-- Bundle size on Google Drive: `907906865` bytes
+- Архив весов: [lab6_weights_bundle.tar.gz](https://drive.google.com/open?id=1q4rjJALqwzE-Hb3QRtvxand6QDoSSZJh)
+- Файл контрольной суммы: [lab6_weights_bundle.tar.gz.sha256](https://drive.google.com/open?id=1yCFZfxLh2ap_nS-yrnwUlb6TjSxRrbIE)
+- Ожидаемый SHA256: `967d087056729d2828d6aa48e65a17d1ec3f38cc62d694ad3f0d4a23537199d3`
+- Размер архива на Google Drive: `907906865` байт
 
-The bundle restores:
+Архив восстанавливает:
 
 ```text
 weights/
@@ -69,33 +69,33 @@ weights/
 outputs/models/lab6_action_classifier.pt
 ```
 
-The Dockerfile checks for these files during `docker build`, so a clone without restored weights fails early instead of producing a broken image.
+`Dockerfile` проверяет наличие этих файлов во время `docker build`, поэтому клон без восстановленных весов не соберет сломанный образ.
 
-GitHub Release fallback is also available:
+Запасной вариант через GitHub Release тоже оставлен:
 
 ```bash
 scripts/download_release_weights.sh
 ```
 
-That fallback requires GitHub CLI (`gh`) and downloads release tag `lab6-timesformer-artifacts`.
+Для него нужен GitHub CLI (`gh`). Скрипт скачивает тег релиза `lab6-timesformer-artifacts`.
 
-## Metrics
+## Метрики
 
-Final TimeSFormer run:
+Финальный запуск TimeSFormer:
 
 ```text
 outputs/timesformer_runs/timesformer_head_b4_e3_20260605/
 ```
 
-Validation split:
+Валидационная разбивка:
 
 ```text
 outputs/manifests/train_val_split_hash_guarded.csv
 ```
 
-Summary:
+Сводка:
 
-| Metric | Value |
+| Метрика | Значение |
 |---|---:|
 | Accuracy | `0.5741` |
 | Macro F1 | `0.5678` |
@@ -103,26 +103,26 @@ Summary:
 | F1 `move` | `0.6730` |
 | F1 `work` | `0.5873` |
 
-Confusion matrix, rows=true and columns=predicted:
+Матрица ошибок: строки - истинный класс, столбцы - предсказанный класс.
 
-| true \ pred | inaction | move | work |
+| истинный \ предсказанный | inaction | move | work |
 |---|---:|---:|---:|
 | inaction | 41 | 29 | 47 |
 | move | 5 | 71 | 29 |
 | work | 22 | 6 | 74 |
 
-Detailed files:
+Подробные файлы:
 
 - `outputs/timesformer_runs/timesformer_head_b4_e3_20260605/metrics.json`
 - `outputs/timesformer_runs/timesformer_head_b4_e3_20260605/per_class_metrics.csv`
 - `outputs/timesformer_runs/timesformer_head_b4_e3_20260605/confusion_matrix.csv`
 - `outputs/reports/timesformer_classical_deployment_status.md`
 
-Note: the original notebook checkpoint path from the received spec was not included in the transferred files, so `timesformer_checkpoint.pt` was trained locally on the hash-guarded split. The run trains the classifier head only and keeps the HuggingFace TimeSFormer base files local for offline Docker inference.
+Важно: оригинальный checkpoint из присланного notebook не был передан вместе с файлами, поэтому `timesformer_checkpoint.pt` обучен локально на hash-guarded split. В этом запуске обучалась только классификационная голова, а базовая модель HuggingFace TimeSFormer хранится локально для Docker-инференса без доступа к сети.
 
-## Raw-Frame Inference
+## Инференс по кадрам
 
-Local Python:
+Локальный Python:
 
 ```bash
 python -m src.predict_frames --input /path/to/8_images
@@ -143,11 +143,11 @@ Docker Compose:
 LAB6_INPUT_DIR=/absolute/path/to/8_images docker compose run --rm infer
 ```
 
-## Embedding Inference
+## Инференс по эмбеддингам
 
-The provided `bagging_best.joblib` path remains available for `.npy` embeddings with 768-dimensional `emb` features.
+Ветка с предоставленным `bagging_best.joblib` сохранена для `.npy`-файлов эмбеддингов с 768 признаками `emb`.
 
-Local Python:
+Локальный Python:
 
 ```bash
 python -m src.predict_embeddings --input /path/to/object_embedding.npy
@@ -163,9 +163,9 @@ docker run --rm \
   -m src.predict_embeddings --input /app/input/object_embedding.npy
 ```
 
-## Verified Locally
+## Проверено локально
 
-Current checked commands:
+Проверенные команды:
 
 ```text
 scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
@@ -188,7 +188,7 @@ stdout: inaction
 real: 7.69 sec
 ```
 
-Fresh GitHub clone check:
+Проверка на свежем клоне из GitHub:
 
 ```text
 git clone https://github.com/HVGrach/miet-lab-video-learning.git
@@ -199,11 +199,11 @@ stdout: inaction
 real: 5.34 sec
 ```
 
-The Docker raw-frame path was checked with `--network none`; the image contains the required weights and does not download models at runtime.
+Docker-инференс по кадрам проверен с `--network none`: образ содержит нужные веса и не скачивает модели во время запуска.
 
-## Legacy Entry Point
+## Старая точка входа
 
-The earlier lab entrypoint remains in the image for compatibility:
+Предыдущая точка входа лабораторной оставлена в образе для совместимости:
 
 ```bash
 docker run --rm \
