@@ -9,4 +9,4 @@ fi
 docker run --rm \
   -v "$1:/app/input:ro" \
   timesformer-infer \
-  python -m src.predict_frames --input /app/input
+  --input /app/input

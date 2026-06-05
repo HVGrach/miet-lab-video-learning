@@ -86,3 +86,69 @@ real: 5.52 sec
 docker run --rm --network none ... timesformer-infer python -m src.predict_embeddings --input /app/input/object_embedding.npy
 stdout: inaction
 ```
+
+## Финальная актуализация Google Drive/Docker 2026-06-05
+
+Этот блок заменяет предыдущий legacy-oriented способ проверки для публичной сдачи.
+
+Весовой архив опубликован на Google Drive:
+
+```text
+lab6_weights_bundle.tar.gz
+https://drive.google.com/open?id=1q4rjJALqwzE-Hb3QRtvxand6QDoSSZJh
+sha256: 967d087056729d2828d6aa48e65a17d1ec3f38cc62d694ad3f0d4a23537199d3
+size: 907906865 bytes
+```
+
+Публичный clone восстанавливает веса командой:
+
+```bash
+scripts/download_google_drive_weights.sh
+```
+
+Актуальный Docker-контракт:
+
+```bash
+docker build -t timesformer-infer .
+docker run --rm \
+  -v /absolute/path/to/8_images:/app/input:ro \
+  timesformer-infer
+```
+
+Dockerfile теперь проверяет наличие `weights/timesformer_checkpoint.pt`, `weights/timesformer_hf/`, `weights/bagging_best.joblib`, `weights/labels.json` и `outputs/models/lab6_action_classifier.pt` во время build.
+
+Проверка на 2026-06-05:
+
+```text
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+81 tests OK
+```
+
+```text
+scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
+restored weights from /tmp/lab6_drive_script_download.tar.gz
+```
+
+```text
+docker build -t timesformer-infer .
+OK
+image size: 3 986 983 172 bytes
+```
+
+```text
+docker run --rm --network none -v /tmp/lab6_teacher_8_images:/app/input:ro timesformer-infer
+stdout: inaction
+real: 7.69 sec
+```
+
+```text
+scripts/run_frames.sh /tmp/lab6_teacher_8_images
+stdout: inaction
+```
+
+```text
+LAB6_INPUT_DIR=/tmp/lab6_teacher_8_images docker compose run --rm infer
+stdout: inaction
+```
+
+Вывод: текущий публичный Docker путь принимает папку ровно с 8 изображениями и печатает ровно один класс.

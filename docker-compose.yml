@@ -3,6 +3,5 @@ services:
     build: .
     image: timesformer-infer
     volumes:
-      - ./weights:/app/weights:ro
-      - ./sample_input:/app/input:ro
-    command: ["python", "-m", "src.predict_frames", "--input", "/app/input"]
+      - ${LAB6_INPUT_DIR:?Set LAB6_INPUT_DIR to a folder with exactly 8 images}:/app/input:ro
+    command: ["--input", "/app/input"]

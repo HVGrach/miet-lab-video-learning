@@ -10,7 +10,10 @@ class DockerContractTests(unittest.TestCase):
 
         self.assertIn("requirements-inference.txt", text)
         self.assertIn("outputs/models/lab6_action_classifier.pt", text)
-        self.assertIn('ENTRYPOINT ["python", "infer.py"]', text)
+        self.assertIn("weights/timesformer_checkpoint.pt", text)
+        self.assertIn("weights/timesformer_hf", text)
+        self.assertIn('ENTRYPOINT ["python", "-m", "src.predict_frames"]', text)
+        self.assertIn('CMD ["--input", "/app/input"]', text)
         self.assertNotIn("lab6/", text)
 
     def test_dockerignore_excludes_training_dataset_and_notebook_outputs(self):

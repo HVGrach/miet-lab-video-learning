@@ -7,6 +7,7 @@ if [[ $# -ne 1 ]]; then
 fi
 
 docker run --rm \
+  --entrypoint python \
   -v "$1:/app/input/object_embedding.npy:ro" \
   timesformer-infer \
-  python -m src.predict_embeddings --input /app/input/object_embedding.npy
+  -m src.predict_embeddings --input /app/input/object_embedding.npy

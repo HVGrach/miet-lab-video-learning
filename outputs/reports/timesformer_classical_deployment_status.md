@@ -12,7 +12,34 @@ Date: 2026-06-05.
 - Added a locally trained TimeSFormer checkpoint at `weights/timesformer_checkpoint.pt`.
 - Added local HuggingFace TimeSFormer base files at `weights/timesformer_hf/` for offline Docker inference.
 - Updated Docker image to include the new runtime modules, `weights/`, scripts, offline HF settings, and pinned `scikit-learn==1.6.1`.
-- Kept the legacy `infer.py /input` Docker entrypoint working, while adding pass-through support for the spec command style: `docker run ... timesformer-infer python -m src.predict_* ...`.
+- Added `scripts/download_google_drive_weights.sh` to restore large weights from Google Drive and verify SHA256.
+- Updated Docker default entrypoint to `python -m src.predict_frames --input /app/input`.
+- Kept the legacy `infer.py /input` and embedding path available through `--entrypoint python`.
+
+## Artifact Distribution
+
+Primary Google Drive artifact:
+
+```text
+lab6_weights_bundle.tar.gz
+https://drive.google.com/open?id=1q4rjJALqwzE-Hb3QRtvxand6QDoSSZJh
+sha256: 967d087056729d2828d6aa48e65a17d1ec3f38cc62d694ad3f0d4a23537199d3
+size: 907906865 bytes
+```
+
+Checksum file:
+
+```text
+https://drive.google.com/open?id=1yCFZfxLh2ap_nS-yrnwUlb6TjSxRrbIE
+```
+
+Restore command:
+
+```bash
+scripts/download_google_drive_weights.sh
+```
+
+GitHub Release tag `lab6-timesformer-artifacts` remains a fallback.
 
 ## TimeSFormer Training
 
@@ -57,24 +84,43 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
 ```text
+scripts/download_google_drive_weights.sh /tmp/lab6_drive_script_download.tar.gz
+restored weights from /tmp/lab6_drive_script_download.tar.gz
+```
+
+```text
 docker build -t timesformer-infer .
 OK
-image size: 3,986,980,038 bytes
+image size: 3,986,983,172 bytes
 ```
 
 Offline TimeSFormer raw-frame inference:
 
 ```text
-docker run --rm --network none ... timesformer-infer python -m src.predict_frames --input /app/input
+docker run --rm --network none -v /tmp/lab6_teacher_8_images:/app/input:ro timesformer-infer
 stdout: inaction
-real: 5.52 sec
+real: 7.69 sec
+```
+
+Helper script:
+
+```text
+scripts/run_frames.sh /tmp/lab6_teacher_8_images
+stdout: inaction
+```
+
+Docker Compose:
+
+```text
+LAB6_INPUT_DIR=/tmp/lab6_teacher_8_images docker compose run --rm infer
+stdout: inaction
 ```
 
 Offline embedding inference:
 
 ```text
-docker run --rm --network none ... timesformer-infer python -m src.predict_embeddings --input /app/input/object_embedding.npy
-stdout: inaction
+scripts/run_embeddings.sh /tmp/lab6_object_embedding.npy
+stdout: work
 ```
 
 Offline legacy frame inference:

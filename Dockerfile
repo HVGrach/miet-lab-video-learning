@@ -20,4 +20,11 @@ COPY weights ./weights
 COPY infer.py ./infer.py
 COPY outputs/models/lab6_action_classifier.pt ./outputs/models/lab6_action_classifier.pt
 
-ENTRYPOINT ["python", "infer.py"]
+RUN test -f weights/timesformer_checkpoint.pt \
+    && test -d weights/timesformer_hf \
+    && test -f weights/bagging_best.joblib \
+    && test -f weights/labels.json \
+    && test -f outputs/models/lab6_action_classifier.pt
+
+ENTRYPOINT ["python", "-m", "src.predict_frames"]
+CMD ["--input", "/app/input"]
